@@ -14,6 +14,24 @@ export default class Contacts extends Component {
     filter:'',
    }
 
+   componentDidMount(){
+    const contacts = JSON.parse(localStorage.getItem("contacts"));
+    if(contacts?.length){
+    this.setState({
+        contacts,
+    })
+    }
+   }
+
+   componentDidUpdate(prevProps, prevState){
+    console.log('componentDidUpdate', prevProps, prevState);
+    const {contacts} = this.state;
+    if(prevState.contacts !== contacts){
+        localStorage.setItem("contacts", JSON.stringify(contacts));
+    }
+     
+   }
+
    handleChange = (e) => {
     const {name,value} = e.target;
     this.setState({
